@@ -14,7 +14,33 @@ require 'chipmunk_object'
 require 'chipmunk_adjust'
 require 'draw_primitives'
 
+require 'PyramidStack'
+
 module ChipmunkDemos
-  class MainWindow
+  class MainWindow < Gosu::Window
+    include CP::DrawPrimitives
+    def initialize
+      super(640,480,false)
+      @demo = PyramidStack::PyramidStackDemo.new
+    end
+    
+    def update
+      @demo.update
+    end
+    
+    def draw
+      self.draw_rect(0,0,self.width,self.height,Gosu::white)
+      @demo.chipmunk_objects.each {|obj| obj.draw(self)}
+    end
+    
+    def centerx
+      0
+    end
+    
+    def centery
+      0
+    end
   end
 end
+
+ChipmunkDemos::MainWindow.new.show

@@ -1,6 +1,6 @@
-require 'chipmunk_objects'
+require 'chipmunk_object'
 
-module ChipmunkDemo
+module ChipmunkDemos
   class Demo
     STEPS = 3
     DT = 1.0/60.0/STEPS

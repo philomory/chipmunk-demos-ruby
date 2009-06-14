@@ -1,4 +1,4 @@
-module MoonBuggy
+module CP
   
   # Some colors to use. Note that at the moment COLLISIONS isn't used, since
   # the ruby version of Chipmunk does not yet provide the necessary level of

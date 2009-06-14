@@ -1,11 +1,11 @@
 require 'demo'
 
-module ChipmunkDemo
+module ChipmunkDemos
   module PyramidStack
     class PyramidStackDemo < Demo
       def initialize
         super
-        @space.iterations = 20
+        @space.iterations = 5
         @space.resize_static_hash(40.0,1000)
         @space.resize_active_hash(40.0,1000)
         @space.gravity = CP::Vec2.new(0,-100)
@@ -18,7 +18,8 @@ module ChipmunkDemo
             @boxes << Box.new(CP::Vec2.new(j*32 - i*16, 300 - i*32))
           end
         end
-        @chipmunk_objects << @boundary, @ball, *@boxes
+        @space.add_objects(@boundary, @ball, *@boxes)
+        @chipmunk_objects.push(@boundary, @ball, *@boxes)
       end
     end
     
@@ -66,7 +67,7 @@ module ChipmunkDemo
         CP::Vec2.new(-320, 240),
         CP::Vec2.new(-320,-240),
         CP::Vec2.new( 320,-240),
-        CP::Vec2.new(-320, 240)
+        CP::Vec2.new( 320, 240)
       ]
       
       attr_accessor :body, :shapes
@@ -80,5 +81,6 @@ module ChipmunkDemo
         end
         init_chipmunk_object(@body,*@shapes)
       end
+    end
   end
 end
