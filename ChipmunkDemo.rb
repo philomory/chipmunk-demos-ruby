@@ -29,8 +29,10 @@ module ChipmunkDemos
     end
     
     def draw
-      self.draw_rect(0,0,self.width,self.height,Gosu::white)
-      @demo.chipmunk_objects.each {|obj| obj.draw(self)}
+      self.clip_to(0,0,self.width,self.height) do 
+        self.draw_rect(0,0,self.width,self.height,Gosu::white)
+        @demo.chipmunk_objects.each {|obj| obj.draw(self)}
+      end
     end
     
     def centerx
