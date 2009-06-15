@@ -26,9 +26,11 @@ require 'Plink'
 require 'Bounce'
 require 'Tumble'
 require 'PyramidTopple'
+require 'LogoSmash'
 
 module ChipmunkDemos
   DEMOS = [
+    LogoSmash::LogoSmashDemo,
     PyramidStack::PyramidStackDemo,
     Plink::PlinkDemo,
     Tumble::TumbleDemo,
