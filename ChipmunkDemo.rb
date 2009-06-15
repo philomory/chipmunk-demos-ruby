@@ -15,13 +15,15 @@ require 'chipmunk_adjust'
 require 'draw_primitives'
 
 require 'PyramidStack'
+require 'Plink'
 
 module ChipmunkDemos
   class MainWindow < Gosu::Window
     include CP::DrawPrimitives
     def initialize
       super(640,480,false)
-      @demo = PyramidStack::PyramidStackDemo.new
+      #@demo = PyramidStack::PyramidStackDemo.new
+      @demo = Plink::PlinkDemo.new
     end
     
     def update
