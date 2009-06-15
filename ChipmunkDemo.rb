@@ -19,7 +19,7 @@ end
 require 'gosu'
 require 'chipmunk_object'
 require 'chipmunk_adjust'
-require 'draw_primitives'
+require 'draw_gl'
 
 require 'PyramidStack'
 require 'Plink'
