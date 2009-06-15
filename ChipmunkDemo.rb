@@ -25,12 +25,14 @@ require 'PyramidStack'
 require 'Plink'
 require 'Bounce'
 require 'Tumble'
+require 'PyramidTopple'
 
 module ChipmunkDemos
   DEMOS = [
     PyramidStack::PyramidStackDemo,
     Plink::PlinkDemo,
     Tumble::TumbleDemo,
+    PyramidTopple::PyramidToppleDemo,
     Bounce::BounceDemo
   ]
   
