@@ -78,7 +78,7 @@ module CP
     def draw_poly_shape(poly)
       body = poly.body
       verts = poly.verts
-      ary = verts.map {|v| body.p + v.rotate(body.rot)}
+      ary = verts.map {|v| body.p + poly.offset + v.rotate(body.rot)}
       segs = ary.enum_cons(2).to_a << [ary[-1],ary[0]]
       segs.each do |v1,v2|
         self.draw_line(offx(v1.x),offy(v1.y),LINES,offx(v2.x),offy(v2.y),LINES)
