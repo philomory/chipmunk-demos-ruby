@@ -17,6 +17,7 @@ require 'draw_primitives'
 require 'PyramidStack'
 require 'Plink'
 require 'Bounce'
+require 'Tumble'
 
 module ChipmunkDemos
   class MainWindow < Gosu::Window
@@ -25,7 +26,8 @@ module ChipmunkDemos
       super(640,480,false)
       #@demo = PyramidStack::PyramidStackDemo.new
       #@demo = Plink::PlinkDemo.new
-      @demo = Bounce::BounceDemo.new
+      #@demo = Bounce::BounceDemo.new
+      @demo = Tumble::TumbleDemo.new
     end
     
     def update
