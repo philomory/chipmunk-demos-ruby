@@ -9,9 +9,7 @@ module ChipmunkDemos
     
     attr_accessor :steps,:space, :chipmunk_objects
     def initialize
-      # Unfortunately, this function is not available in the ruby wrapper for
-      # chipmunk at the moment.
-      # CP.reset_shape_id_counter
+      CP::Shape.reset_id_counter
       @space = CP::Space.new
       @chipmunk_objects = []
       @steps = 3
