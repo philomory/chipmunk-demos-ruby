@@ -14,7 +14,7 @@ module ChipmunkDemos
         @chipmunk_objects.push(@image,@bullet)
       end
       def options
-        {:color = false}
+        {:color => false}
       end
     end
     class Image
