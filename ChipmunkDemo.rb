@@ -59,6 +59,10 @@ module ChipmunkDemos
       end
     end
     
+    def options
+      @demo.options
+    end
+    
     def button_down(id)
       if id == Gosu::KbEscape
         close

@@ -23,5 +23,9 @@ module ChipmunkDemos
       end
     end
     
+    def options
+      {:color => true}
+    end
+    
   end
 end

@@ -20,7 +20,7 @@ module CP
     CONSTRAINT_COLOR = [0.5, 1.0, 0.5]
     
     def glColor_from_pointer(obj)
-      return glColor3f(0.0,0.0,0.0)
+      return glColor3f(0.0,0.0,0.0) unless self.options[:color]
       val = obj.object_id.hash.hash
       
       r = (val>>0) & 0xFF

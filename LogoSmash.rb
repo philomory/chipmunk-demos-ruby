@@ -13,8 +13,8 @@ module ChipmunkDemos
         @space.add_objects(@image,@bullet)
         @chipmunk_objects.push(@image,@bullet)
       end
-      def update
-        super
+      def options
+        {:color = false}
       end
     end
     class Image
