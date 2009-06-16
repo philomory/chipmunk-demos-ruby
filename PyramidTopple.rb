@@ -13,11 +13,12 @@ module ChipmunkDemos
         @floor = Floor.new
         @dominoes = []
         height = 9
-        for i in (0..height) do
+        for i in (1..height) do
           offset = CP::Vec2.new(-i*60/2.0, (height - i)*52)
           for j in (0...i) do
             @dominoes << Domino.new(CP::Vec2.new(j*60,-220) + offset)
             @dominoes << Domino.new(CP::Vec2.new(j*60,-197) + offset,Math::PI/2.0)
+            next if j == (i - 1)
             @dominoes << Domino.new(CP::Vec2.new(j*60 + 30,-191) + offset,Math::PI/2.0)
           end
           @dominoes << Domino.new(CP::Vec2.new(-17,-174) + offset)
