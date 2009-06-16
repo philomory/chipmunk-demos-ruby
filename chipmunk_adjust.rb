@@ -47,15 +47,22 @@ module CP
       end
     end
   end
+  module Constraint
+    def draw(window)
+      window.draw_constraint(self)
+    end
+  end
   class Body
     def draw(window)
-      window.draw_vertex(self.p.x,self.p.y)
+      #window.draw_vertex(self.p.x,self.p.y)
     end
   end
   module Object
     def draw(window)
-      @chipmunk_objects.each do |obj|
-        obj.draw(window) if obj.is_a?(Shape) || obj.is_a?(Body)
+      if @chipmunk_objects
+        @chipmunk_objects.each do |obj|
+          obj.draw(window)
+        end
       end
     end
     def reset_forces

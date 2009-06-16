@@ -30,7 +30,7 @@ require 'LogoSmash'
 
 module ChipmunkDemos
   DEMOS = [
-    LogoSmash::LogoSmashDemo,
+    #LogoSmash::LogoSmashDemo,
     PyramidStack::PyramidStackDemo,
     Plink::PlinkDemo,
     Tumble::TumbleDemo,
@@ -39,7 +39,7 @@ module ChipmunkDemos
   ]
   
   class MainWindow < Gosu::Window
-    include CP::DrawPrimitives
+    include CP::DrawGL
     def initialize
       super(640,480,false)
       @demo = DEMOS[0].new
@@ -52,7 +52,10 @@ module ChipmunkDemos
     def draw
       self.clip_to(0,0,self.width,self.height) do 
         self.draw_rect(0,0,self.width,self.height,Gosu::white)
-        @demo.chipmunk_objects.each {|obj| obj.draw(self)}
+        self.gl do
+          glLineWidth(3.0)
+          @demo.chipmunk_objects.each {|obj| obj.draw(self)}
+        end
       end
     end
     
@@ -62,6 +65,10 @@ module ChipmunkDemos
       elsif (demo = DEMOS[(self.button_id_to_char(id).ord - 'a'.ord)] rescue nil)
         @demo = demo.new
       end
+    end
+    
+    def draw_rect(x,y,w,h,c)
+      self.draw_quad(x,y,c,x+w,y,c,x,y+h,c,x+w,y+h,c)
     end
     
     def centerx
