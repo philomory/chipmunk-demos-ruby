@@ -64,17 +64,17 @@ module ChipmunkDemos
       attr_reader :balls
       def initialize
         @balls = []
-        for y in (0...ImageHeight) do
-          for x in (0...ImageWidth) do
+        (0...ImageHeight).step(2) do |y|
+          (0...ImageWidth).step(2) do |x|
             next if self.get_pixel(x,y).zero?
             x_jitter = 0.05*(rand)
             y_jitter = 0.05*(rand)
             @balls << Ball.new(2*(x - ImageWidth/2 + x_jitter), 2*(ImageHeight/2 - y + y_jitter))
           end
         end
-        puts @balls.size
+        #puts @balls.size
         #counter = 0
-        #@balls.reject! {counter +=1; counter %= 3; counter != 0}
+        #@balls.reject! {counter +=1; counter %= 3; counter == 0}
         #puts @balls.size
         init_chipmunk_object(*@balls)
       end
@@ -83,7 +83,7 @@ module ChipmunkDemos
       include CP::Object
       MASS   = 1.0
       MOMENT = Float::INFINITY
-      RADIUS = 0.95
+      RADIUS = 1.95
       ELASTICITY = FRICTION = 0.0
       
       attr_reader :shape, :body
