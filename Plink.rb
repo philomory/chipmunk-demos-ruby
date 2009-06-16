@@ -26,7 +26,7 @@ module ChipmunkDemos
         end
 
         # Add lots of pentagons
-        @pentagons = Array.new(50) do |i|
+        @pentagons = Array.new(300) do |i|
           p = CP::Vec2.new(rand(640) - 320,350)
           FallingPentagon.new(p)
         end

@@ -72,6 +72,10 @@ module ChipmunkDemos
             @balls << Ball.new(2*(x - ImageWidth/2 + x_jitter), 2*(ImageHeight/2 - y + y_jitter))
           end
         end
+        puts @balls.size
+        #counter = 0
+        #@balls.reject! {counter +=1; counter %= 3; counter != 0}
+        #puts @balls.size
         init_chipmunk_object(*@balls)
       end
     end

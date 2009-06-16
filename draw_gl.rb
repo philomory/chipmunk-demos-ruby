@@ -4,6 +4,16 @@ module CP
   module DrawGL
     include GL, GLU, GLUT
     
+    def gl_init
+      glClearColor(1.0,1.0,1.0,1.0)
+      glMatrixMode(GL_PROJECTION)
+      glLoadIdentity()
+      glOrtho(-320.0, 321.0, -240.0, 241.0, -1.0, 1.0)
+      glTranslatef(0.5, 0.5, 0.0)
+      
+      glEnableClientState(GL_VERTEX_ARRAY)
+    end
+    
     LINE_COLOR       = [0.0, 0.0, 0.0]
     COLLISION_COLOR  = [1.0, 0.0, 0.0]
     BODY_COLOR       = [0.0, 0.0, 1.0]
@@ -158,8 +168,8 @@ module CP
     
     def draw_poly_shape(poly)
       body = poly.body
-      rot, p, verts = body.rot, body.p, poly.verts
-      var = verts.map {|vo| v = vo.rotate(rot) + p; [v.x,v.y]}.flatten
+      rot, p, o, verts = body.rot, body.p, poly.offset, poly.verts
+      var = verts.map {|vo| v = vo.rotate(rot) + p + o; [v.x,v.y]}.flatten
     
       glVertexPointer(2,GL_FLOAT,0,var)
     

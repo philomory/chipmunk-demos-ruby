@@ -30,7 +30,7 @@ require 'LogoSmash'
 
 module ChipmunkDemos
   DEMOS = [
-    #LogoSmash::LogoSmashDemo,
+    LogoSmash::LogoSmashDemo,
     PyramidStack::PyramidStackDemo,
     Plink::PlinkDemo,
     Tumble::TumbleDemo,
@@ -41,7 +41,7 @@ module ChipmunkDemos
   class MainWindow < Gosu::Window
     include CP::DrawGL
     def initialize
-      super(640,480,false)
+      super(641,481,false)
       @demo = DEMOS[0].new
     end
     
@@ -53,7 +53,7 @@ module ChipmunkDemos
       self.clip_to(0,0,self.width,self.height) do 
         self.draw_rect(0,0,self.width,self.height,Gosu::white)
         self.gl do
-          glLineWidth(3.0)
+          gl_init
           @demo.chipmunk_objects.each {|obj| obj.draw(self)}
         end
       end
