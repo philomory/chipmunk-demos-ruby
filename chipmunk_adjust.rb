@@ -10,6 +10,9 @@ module CP
   def self.vzero
     CP::Vec2.new(0.0,0.0)
   end
+  def self.vlerp(v1,v2,t)
+    (v1*(1.0-t))+(v2*t)
+  end
   module Shape
     class Circle
       attr_reader :radius, :center
