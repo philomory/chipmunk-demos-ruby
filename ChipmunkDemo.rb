@@ -28,6 +28,7 @@ require 'Tumble'
 require 'PyramidTopple'
 require 'LogoSmash'
 require 'WalkBot'
+require 'TheoJansen'
 
 module ChipmunkDemos
   DEMOS = [
@@ -37,7 +38,8 @@ module ChipmunkDemos
     Tumble::TumbleDemo,
     PyramidTopple::PyramidToppleDemo,
     Bounce::BounceDemo,
-    WalkBot::WalkBotDemo
+    WalkBot::WalkBotDemo,
+    TheoJansen::TheoJansenDemo
   ]
   
   class MainWindow < Gosu::Window
