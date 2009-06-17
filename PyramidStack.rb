@@ -8,14 +8,14 @@ module ChipmunkDemos
         @space.iterations = 5
         @space.resize_static_hash(40.0,1000)
         @space.resize_active_hash(40.0,1000)
-        @space.gravity = CP::Vec2.new(0,-100)
+        @space.gravity = cpv(0,-100)
         
         @boundary = Boundary.new
-        @ball = Ball.new(CP::Vec2.new(0,-240 + Ball::RADIUS))
+        @ball = Ball.new(cpv(0,-240 + Ball::RADIUS))
         @boxes = []
         for i in (0...14) do
           for j in (0..i) do
-            @boxes << Box.new(CP::Vec2.new(j*32 - i*16, 300 - i*32))
+            @boxes << Box.new(cpv(j*32 - i*16, 300 - i*32))
           end
         end
         @space.add_objects(@boundary, @ball, *@boxes)
@@ -26,10 +26,10 @@ module ChipmunkDemos
     class Box
       include CP::Object
       VERTS = [
-        CP::Vec2.new(-15,-15),
-        CP::Vec2.new(-15, 15),
-        CP::Vec2.new( 15, 15),
-        CP::Vec2.new( 15,-15)
+        cpv(-15,-15),
+        cpv(-15, 15),
+        cpv( 15, 15),
+        cpv( 15,-15)
       ]
       MASS  = 1.0
       MOMENT = CP::moment_for_poly(MASS,VERTS,CP::vzero)
@@ -64,10 +64,10 @@ module ChipmunkDemos
       include CP::Object
       ELASTICITY = FRICTION = 1.0
       VERTICES = [
-        CP::Vec2.new(-320, 240),
-        CP::Vec2.new(-320,-240),
-        CP::Vec2.new( 320,-240),
-        CP::Vec2.new( 320, 240)
+        cpv(-320, 240),
+        cpv(-320,-240),
+        cpv( 320,-240),
+        cpv( 320, 240)
       ]
       
       attr_accessor :body, :shapes

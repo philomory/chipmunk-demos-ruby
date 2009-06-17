@@ -9,7 +9,7 @@ module ChipmunkDemos
         @space.resize_active_hash(2.0,10000)
         @space.iterations = 1
         @image  = Image.new
-        @bullet = Bullet.new(CP::Vec2.new(-400.0,-10.0),CP::Vec2.new(400.0,0.0))
+        @bullet = Bullet.new(cpv(-400.0,-10.0),cpv(400.0,0.0))
         @space.add_objects(@image,@bullet)
         @chipmunk_objects.push(@image,@bullet)
       end
@@ -89,7 +89,7 @@ module ChipmunkDemos
       attr_reader :shape, :body
       def initialize(x,y)
         @body = CP::Body.new(MASS,MOMENT)
-        @body.p = CP::Vec2.new(x,y)
+        @body.p = cpv(x,y)
         @shape = CP::Shape::Circle.new(@body,RADIUS,CP::vzero)
         @shape.e = ELASTICITY
         @shape.u = FRICTION

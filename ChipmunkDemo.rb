@@ -66,8 +66,8 @@ module ChipmunkDemos
     def button_down(id)
       if id == Gosu::KbEscape
         close
-      elsif id == Gosu::MsLeft
-        self.mouse_clicked
+      #elsif id == Gosu::MsLeft
+      #  self.mouse_clicked
       elsif (demo = DEMOS[(self.button_id_to_char(id).ord - 'a'.ord)] rescue nil)
         @demo = demo.new
       end
@@ -80,17 +80,13 @@ module ChipmunkDemos
     def mouse_clicked
       x,y = self.mouse_x,self.mouse_y
       loc = self.gosu_to_chipmunk(x,y)
+      # No shape_point_query right now in the ruby binding. Something else
+      # for now.
+      #@demo.space.
     end
     
     def gosu_to_chipmunk(x,y)
-      self.gl do
-        gl_init
-        model = glGetDoublev(GL_MODELVIEW_MATRIX)
-        proj = glGetDoublev(GL_PROJECTION_MATRIX)
-        view = glGetIntegerv(GL_VIEWPORT)
-        mx,my,mz = gluUnProject(x,glutGet(GLUT_WINDOW_HEIGHT) - y,0.0,model,proj,view)
-        return CP::Vec2.new(mx,my)
-      end
+      result = cpv(x-self.width/2,self.height/2)
     end
     
     def centerx

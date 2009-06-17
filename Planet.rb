@@ -16,7 +16,7 @@ module ChipmunkDemos
       
       def rand_pos(radius)
         loop do
-          v = CP::Vec2.new(rand(640 - 2*radius) - (320 - radius),
+          v = cpv(rand(640 - 2*radius) - (320 - radius),
                            rand(480 - 2*radius) - (240 - radius))
           return v if v.length >= 100.0
         end
@@ -36,12 +36,12 @@ module ChipmunkDemos
       include CP::Object
       SIZE     = 10.0
       MASS     =  1.0
-      RADIUS   = CP::Vec2.new(size,size).length
+      RADIUS   = cpv(size,size).length
       VERTICES = [
-        CP::Vec2.new(-size,-size),
-        CP::Vec2.new(-size, size),
-        CP::Vec2.new( size, size),
-        CP::Vec2.new( size,-size)
+        cpv(-size,-size),
+        cpv(-size, size),
+        cpv( size, size),
+        cpv( size,-size)
       ]
       MOMENT   = CP::moment_for_poly(MASS,VERTICES,CP::vzero)
       

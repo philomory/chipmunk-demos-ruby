@@ -6,9 +6,12 @@ require 'chipmunk_object'
 # track of do not change over the life of a body or shape, it works out fine.
 # Also added dispatching for drawing shapes, to make things neater and not
 # require typechecking the shape to find out what draw method to use.
+def cpv(x,y)
+  CP::Vec2.new(x,y)
+end
 module CP
   def self.vzero
-    CP::Vec2.new(0.0,0.0)
+    cpv(0.0,0.0)
   end
   def self.vlerp(v1,v2,t)
     (v1*(1.0-t))+(v2*t)

@@ -8,7 +8,7 @@ module ChipmunkDemos
         @space.iterations = 10
         @walls = Walls.new
         @paddle = Paddle.new(CP::vzero)
-        @boxes = Array.new(10) {Box.new(CP::Vec2.new(rand(640) - 320,rand(480) - 240))}
+        @boxes = Array.new(10) {Box.new(cpv(rand(640) - 320,rand(480) - 240))}
         @space.add_objects(@walls,@paddle,*@boxes)
         @chipmunk_objects.push(@walls,@paddle,*@boxes)
       end
@@ -19,13 +19,13 @@ module ChipmunkDemos
       SIZE     = 10.0
       MASS     =  1.0
       VERTICES = [
-        CP::Vec2.new(-SIZE,-SIZE),
-        CP::Vec2.new(-SIZE, SIZE),
-        CP::Vec2.new( SIZE, SIZE),
-        CP::Vec2.new( SIZE,-SIZE)
+        cpv(-SIZE,-SIZE),
+        cpv(-SIZE, SIZE),
+        cpv( SIZE, SIZE),
+        cpv( SIZE,-SIZE)
       ]
       MOMENT   = CP::moment_for_poly(MASS,VERTICES,CP::vzero)
-      RADIUS   = CP::Vec2.new(SIZE,SIZE).length
+      RADIUS   = cpv(SIZE,SIZE).length
       ELASTICITY = 1.0
       FRICTION   = 0.0
       
@@ -33,7 +33,7 @@ module ChipmunkDemos
       def initialize(p)
         @body = CP::Body.new(MASS,MOMENT)
         @body.p = p
-        @body.v = CP::Vec2.new(2*rand()-1,2*rand()-1) * 200
+        @body.v = cpv(2*rand()-1,2*rand()-1) * 200
         
         @shape = CP::Shape::Poly.new(@body,VERTICES,CP::vzero)
         @shape.e = ELASTICITY
@@ -51,8 +51,8 @@ module ChipmunkDemos
       attr_reader :anchor, :body, :shape, :joint
       def initialize(p)
         @body   = CP::Body.new(MASS,MOMENT)
-        a = p + CP::Vec2.new(-75,0)
-        b = p + CP::Vec2.new( 75,0)
+        a = p + cpv(-75,0)
+        b = p + cpv( 75,0)
         @shape  = CP::Shape::Segment.new(body,a,b,RADIUS)
         
         @anchor = CP::StaticBody.new
@@ -67,10 +67,10 @@ module ChipmunkDemos
       include CP::Object
       ELASTICITY = FRICTION = 1.0
       VERTICES = [
-        CP::Vec2.new(-320, 240),
-        CP::Vec2.new(-320,-240),
-        CP::Vec2.new( 320,-240),
-        CP::Vec2.new( 320, 240)
+        cpv(-320, 240),
+        cpv(-320,-240),
+        cpv( 320,-240),
+        cpv( 320, 240)
       ]
       
       attr_accessor :body, :shapes

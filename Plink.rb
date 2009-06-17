@@ -7,7 +7,7 @@ module ChipmunkDemos
         super
         @steps = 1
         @space.iterations = 5
-        @space.gravity    = CP::Vec2.new(0,-100)
+        @space.gravity    = cpv(0,-100)
         @space.resize_static_hash(40.0,999)
         @space.resize_active_hash(30.0,2999)
 
@@ -20,14 +20,14 @@ module ChipmunkDemos
         for i in (0...9) do
           for j in (0...6) do
             stagger = (j%2)*40
-            offset = CP::Vec2.new(i*80 - 320 + stagger,j*70 - 240)
+            offset = cpv(i*80 - 320 + stagger,j*70 - 240)
             @triangles << StaticTriangle.new(@static_body,offset)
           end
         end
 
         # Add lots of pentagons
         @pentagons = Array.new(300) do |i|
-          p = CP::Vec2.new(rand(640) - 320,350)
+          p = cpv(rand(640) - 320,350)
           FallingPentagon.new(p)
         end
 
@@ -43,7 +43,7 @@ module ChipmunkDemos
           @space.step(self.dt)
           @pentagons.each do |pent|
             if (pent.body.p.y < -260 || pent.body.p.y.abs > 340)
-              pent.body.p = CP::Vec2.new(rand(640) - 320,260)
+              pent.body.p = cpv(rand(640) - 320,260)
             end # if
           end #each
         end# do
@@ -53,9 +53,9 @@ module ChipmunkDemos
     class StaticTriangle
       include CP::Object
       VERTICES = [
-        CP::Vec2.new(-15,-15),
-        CP::Vec2.new(  0, 10),
-        CP::Vec2.new( 15,-15)
+        cpv(-15,-15),
+        cpv(  0, 10),
+        cpv( 15,-15)
       ]
       ELASTICITY = FRICTION = 1.0
 
@@ -73,7 +73,7 @@ module ChipmunkDemos
       NUM_VERTS = 5
       VERTICES = Array.new(NUM_VERTS) do |i|
         angle = -2*Math::PI*i/(NUM_VERTS)
-        CP::Vec2.new(10*Math.cos(angle), 10*Math.sin(angle))
+        cpv(10*Math.cos(angle), 10*Math.sin(angle))
       end
       MASS       = 1.0
       MOMENT     = CP::moment_for_poly(MASS,VERTICES,CP::vzero)

@@ -8,13 +8,13 @@ module ChipmunkDemos
         @steps = 3
         @space.resize_active_hash(30.0, 999)
         @space.resize_static_hash(200.0, 99)
-        @space.gravity = CP::Vec2.new(0,-600)
+        @space.gravity = cpv(0,-600)
         
         @tumbler = Tumbler.new
         @bricks = []
         for i in (0...3) do
           for j in (0...7) do
-            @bricks << Brick.new(CP::Vec2.new(i*60 - 150, j*30 - 150))
+            @bricks << Brick.new(cpv(i*60 - 150, j*30 - 150))
           end
         end
         
@@ -33,10 +33,10 @@ module ChipmunkDemos
     class Brick
       include CP::Object
       VERTICES = [
-        CP::Vec2.new(-30,-15),
-        CP::Vec2.new(-30, 15),
-        CP::Vec2.new( 30, 15),
-        CP::Vec2.new( 30,-15)
+        cpv(-30,-15),
+        cpv(-30, 15),
+        cpv( 30, 15),
+        cpv( 30,-15)
       ]
       MASS    = 1.0
       MOMENT  = CP::moment_for_poly(MASS,VERTICES,CP::vzero)
@@ -58,10 +58,10 @@ module ChipmunkDemos
     class Tumbler
       include CP::Object
       VERTICES = [
-        CP::Vec2.new(-200,-200),
-        CP::Vec2.new(-200, 200),
-        CP::Vec2.new( 200, 200),
-        CP::Vec2.new( 200,-200)
+        cpv(-200,-200),
+        cpv(-200, 200),
+        cpv( 200, 200),
+        cpv( 200,-200)
       ]
       ELASTICITY = FRICTION = 1.0
       SPIN = 0.4
