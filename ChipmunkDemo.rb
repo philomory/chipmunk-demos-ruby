@@ -47,6 +47,7 @@ module ChipmunkDemos
     def initialize
       super(641,481,false)
       @demo = DEMOS[0].new
+      self.caption = "Chipmunk Demos: #{@demo.options[:title]}"
     end
     
     def update
@@ -75,6 +76,7 @@ module ChipmunkDemos
       #  self.mouse_clicked
       elsif (demo = DEMOS[(self.button_id_to_char(id).ord - 'a'.ord)] rescue nil)
         @demo = demo.new
+        self.caption = "Chipmunk Demos: #{@demo.options[:title]}"
       end
     end
     

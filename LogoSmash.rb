@@ -3,6 +3,9 @@ require 'demo'
 module ChipmunkDemos
   module LogoSmash
     class LogoSmashDemo < Demo
+      OPTIONS = {
+        :color => false
+      }
       def initialize
         super
         @steps = 1
@@ -12,9 +15,6 @@ module ChipmunkDemos
         @bullet = Bullet.new(cpv(-400.0,-10.0),cpv(400.0,0.0))
         @space.add_objects(@image,@bullet)
         @chipmunk_objects.push(@image,@bullet)
-      end
-      def options
-        {:color => false}
       end
     end
     class Image

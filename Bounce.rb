@@ -3,6 +3,9 @@ require 'demo'
 module ChipmunkDemos
   module Bounce
     class BounceDemo < Demo
+      OPTIONS = {
+        :title => 'Bounce Demo'
+      }
       def initialize
         super
         @space.iterations = 10

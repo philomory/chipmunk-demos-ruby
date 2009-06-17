@@ -22,8 +22,15 @@ module ChipmunkDemos
       end
     end
     
+    DEFAULT_OPTIONS = {
+      :color => true,
+      :title => "Demo"
+    }
+    
     def options
-      {:color => true}
+      DEFAULT_OPTIONS.merge(
+      (self.class.const_get(:OPTIONS) rescue {})
+      )
     end
 
   end
