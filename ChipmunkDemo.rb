@@ -6,6 +6,7 @@ require 'enumerator'
 unless [].respond_to?(:enum_cons)
   module Enumerable
     alias :enum_cons :each_cons
+    alias :enum_slice :each_slice
   end
 end
 unless 'a'.respond_to?(:ord)
@@ -29,6 +30,7 @@ require 'PyramidTopple'
 require 'LogoSmash'
 require 'WalkBot'
 require 'TheoJansen'
+require 'Pump'
 
 module ChipmunkDemos
   DEMOS = [
@@ -39,7 +41,8 @@ module ChipmunkDemos
     PyramidTopple::PyramidToppleDemo,
     Bounce::BounceDemo,
     WalkBot::WalkBotDemo,
-    TheoJansen::TheoJansenDemo
+    TheoJansen::TheoJansenDemo,
+    Pump::PumpDemo
   ]
   
   class MainWindow < Gosu::Window
