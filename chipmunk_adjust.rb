@@ -16,6 +16,11 @@ module CP
   def self.vlerp(v1,v2,t)
     (v1*(1.0-t))+(v2*t)
   end
+  def self.moment_for_segment(mass,a,b)
+    length = (a-b).length
+    offset = ((a+b)*(0.5))
+    return ((mass*length*length)/12.0) + (mass * (offset.dot offset))
+  end
   module Shape
     class Circle
       attr_reader :radius, :center

@@ -7,12 +7,13 @@ module ChipmunkDemos
       (1.0/60.0)/steps
     end
     
-    attr_accessor :steps,:space, :chipmunk_objects
+    attr_accessor :steps,:space, :chipmunk_objects,:arrow_direction
     def initialize
       CP::Shape.reset_id_counter
       @space = CP::Space.new
       @chipmunk_objects = []
       @steps = 3
+      @arrow_direction = CP::vzero
     end
     
     def update
@@ -24,6 +25,6 @@ module ChipmunkDemos
     def options
       {:color => true}
     end
-    
+
   end
 end

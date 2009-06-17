@@ -27,6 +27,7 @@ require 'Bounce'
 require 'Tumble'
 require 'PyramidTopple'
 require 'LogoSmash'
+require 'WalkBot'
 
 module ChipmunkDemos
   DEMOS = [
@@ -35,7 +36,8 @@ module ChipmunkDemos
     Plink::PlinkDemo,
     Tumble::TumbleDemo,
     PyramidTopple::PyramidToppleDemo,
-    Bounce::BounceDemo
+    Bounce::BounceDemo,
+    WalkBot::WalkBotDemo
   ]
   
   class MainWindow < Gosu::Window
@@ -46,6 +48,7 @@ module ChipmunkDemos
     end
     
     def update
+      self.set_arrow_direction
       @demo.update
     end
     
@@ -83,6 +86,16 @@ module ChipmunkDemos
       # No shape_point_query right now in the ruby binding. Something else
       # for now.
       #@demo.space.
+    end
+    
+    def set_arrow_direction
+      x,y = 0,0
+      y += 1 if self.button_down?(Gosu::KbUp)
+      y -= 1 if self.button_down?(Gosu::KbDown)
+      x += 1 if self.button_down?(Gosu::KbRight)
+      x -= 1 if self.button_down?(Gosu::KbLeft)
+      
+      @demo.arrow_direction = cpv(x,y)
     end
     
     def gosu_to_chipmunk(x,y)

@@ -267,8 +267,9 @@ module CP
         glEnd()
       when CP::Constraint::DampedSpring
         self.draw_spring(constraint,body_a,body_b)
-      when CP::Constraint::BreakableJoint
-        self.draw_constraint(constraint.delegate)
+      #not implimented in ruby binding yet
+      #when CP::Constraint::BreakableJoint
+      #  self.draw_constraint(constraint.delegate)
       else
       end
     end # def drawConstraint
