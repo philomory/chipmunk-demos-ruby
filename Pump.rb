@@ -14,12 +14,12 @@ module ChipmunkDemos
         @scaffolding = Scaffolding.new
         @plunger = Plunger.new(cpv(-160,-80))
         @balls = Array.new(NUM_BALLS) {|i| Ball.new(cpv(-224,80+64*i))}
-        @small_gear = Gear.new(10, 80,cpv(-160,-160),@scaffolding.body)
-        @big_gear   = Gear.new(40,160,cpv(  80,-160),@scaffolding.body)
+        @small_gear = Gear.new(10, 80,cpv(-160,-160),@scaffolding.body,-Math::PI/2)
+        @big_gear   = Gear.new(40,160,cpv(  80,-160),@scaffolding.body, Math::PI/2)
         # Connect the plunger to the small gear.
         @pin1 = CP::Constraint::PinJoint.new(@small_gear.body,@plunger.body,cpv(80,0),CP::vzero)
         # Connect the gears.
-        @teeth = CP::Constraint::GearJoint.new(@small_gear.body,@big_gear.body,-Math::PI,-2.0)
+        @teeth = CP::Constraint::GearJoint.new(@small_gear.body,@big_gear.body,-Math::PI/2,-2.0)
         @feeder = Feeder.new(@scaffolding.body)
         anchr = @feeder.body.world2local(cpv(-224.0,-160.0))
         @pin2 = CP::Constraint::PinJoint.new(@feeder.body,@small_gear.body,anchr,cpv(0.0,80.0))
@@ -33,7 +33,15 @@ module ChipmunkDemos
         rate = (self.arrow_direction.x*30.0*coef)
         @motor.rate = rate
         @motor.max_force = (rate == 0 ? 0.0 : 1000000.0)
-        super
+        self.steps.times do
+          self.space.step(self.dt)
+          @balls.each do |ball|
+            if ball.body.p.x > 320.0
+              ball.body.v = CP::vzero
+              ball.body.p = cpv(-224.0,200.0)
+            end
+          end
+        end
       end
     end
     
@@ -76,9 +84,10 @@ module ChipmunkDemos
     class Gear
       include CP::Object
       attr_reader :body, :shape
-      def initialize(mass,radius,pos,static_body)
+      def initialize(mass,radius,pos,static_body,angle)
         @body = CP::Body.new(mass,CP::moment_for_circle(mass,radius,0,CP::vzero))
         @body.p = pos
+        @body.angle = angle
         @shape = CP::Shape::Circle.new(@body,radius,CP::vzero)
         @shape.layers = 0
         pivot = CP::Constraint::PivotJoint.new(static_body,@body,pos,CP::vzero)
