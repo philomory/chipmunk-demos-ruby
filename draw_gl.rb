@@ -8,8 +8,8 @@ module CP
       glClearColor(1.0,1.0,1.0,1.0)
       glMatrixMode(GL_PROJECTION)
       glLoadIdentity()
-      glOrtho(-320.0, 320.0, -240.0, 240.0, -1.0, 1.0)
-      glTranslatef(0.5, 0.5, 0.0)
+      glOrtho(0.0, 640.0, 480.0, 0.0, -1.0, 1.0)
+      #glTranslatef(0.5, 0.5, 0.0)
       
       glEnableClientState(GL_VERTEX_ARRAY)
     end

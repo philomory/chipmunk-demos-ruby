@@ -10,8 +10,8 @@ module ChipmunkDemos
         super
         @space.iterations = 10
         @walls = Walls.new
-        @paddle = Paddle.new(CP::vzero)
-        @boxes = Array.new(10) {Box.new(cpv(rand(640) - 320,rand(480) - 240))}
+        @paddle = Paddle.new(cpv(320,240))
+        @boxes = Array.new(10) {Box.new(cpv(rand(640),rand(480)))}
         @space.add_objects(@walls,@paddle,*@boxes)
         @chipmunk_objects.push(@walls,@paddle,*@boxes)
       end
@@ -54,13 +54,14 @@ module ChipmunkDemos
       attr_reader :anchor, :body, :shape, :joint
       def initialize(p)
         @body   = CP::Body.new(MASS,MOMENT)
-        a = p + cpv(-75,0)
-        b = p + cpv( 75,0)
-        @shape  = CP::Shape::Segment.new(body,a,b,RADIUS)
+        @body.p = p
+        a = cpv( 75,0)
+        b = cpv(-75,0)
+        @shape  = CP::Shape::Segment.new(@body,a,b,RADIUS)
         
         @anchor = CP::StaticBody.new
         @anchor.p = p
-        @joint = CP::Constraint::PivotJoint.new(@body,@anchor,CP.vzero,CP.vzero)
+        @joint = CP::Constraint::PivotJoint.new(@body,@anchor,CP::vzero,CP::vzero)
         
         init_chipmunk_object(@body,@shape,@anchor,@joint)
       end
@@ -70,10 +71,10 @@ module ChipmunkDemos
       include CP::Object
       ELASTICITY = FRICTION = 1.0
       VERTICES = [
-        cpv(-320, 240),
-        cpv(-320,-240),
-        cpv( 320,-240),
-        cpv( 320, 240)
+        cpv(  0,  0),
+        cpv(  0,480),
+        cpv(640,480),
+        cpv(640,  0)
       ]
       
       attr_accessor :body, :shapes
