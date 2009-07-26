@@ -12,7 +12,7 @@ module ChipmunkDemos
         @space.resize_active_hash(2.0,10000)
         @space.iterations = 1
         @image  = Image.new
-        @bullet = Bullet.new(cpv(-400.0,-10.0),cpv(400.0,0.0))
+        @bullet = Bullet.new(cpv(-80.0,250.0),cpv(400.0,0.0))
         @space.add_objects(@image,@bullet)
         @chipmunk_objects.push(@image,@bullet)
       end
@@ -69,7 +69,7 @@ module ChipmunkDemos
             next if self.get_pixel(x,y).zero?
             x_jitter = 0.05*(rand)
             y_jitter = 0.05*(rand)
-            @balls << Ball.new(2*(x - ImageWidth/2 + x_jitter), 2*(ImageHeight/2 - y + y_jitter))
+            @balls << Ball.new(2*(x - ImageWidth/2 + x_jitter) + 320, -2*(ImageHeight/2 - y + y_jitter) + 240)
           end
         end
         #puts @balls.size
