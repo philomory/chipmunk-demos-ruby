@@ -7,10 +7,10 @@ module ChipmunkDemos
       def initialize
         super
         @steps = 3
-        @space.gravity = cpv(0.0,-600.0)
+        @space.gravity = cpv(0.0,600.0)
         @space.iterations = 50
         @boundary = Boundary.new
-        @bot = Bot.new(cpv(200,-150))
+        @bot = Bot.new(cpv(520,390))
         
         @space.add_objects(@boundary,@bot)
         @chipmunk_objects.push(@boundary,@bot)
@@ -18,7 +18,7 @@ module ChipmunkDemos
       def update
         coef = (2.0 + self.arrow_direction.y)/3.0
         rate = (self.arrow_direction.x*3.0*coef)
-        @bot.motor.rate = -rate
+        @bot.motor.rate = rate
         super
       end
     end
@@ -29,7 +29,7 @@ module ChipmunkDemos
       def initialize(p)
         @chassis = Chassis.new(p)
         x_offset = Chassis::WIDTH - Crankshaft::RADIUS
-        y_offset = Crankshaft::RADIUS + 30.0
+        y_offset = -Crankshaft::RADIUS - 30.0
         @crank1  = Crankshaft.new(@chassis, cpv( x_offset,y_offset))
         @crank2  = Crankshaft.new(@chassis, cpv(-x_offset,y_offset))
         @motor   = CP::Constraint::SimpleMotor.new(@chassis.body,@crank1.body,MOTOR_SPEED)
@@ -74,16 +74,16 @@ module ChipmunkDemos
       include CP::Object
       MASS   =  2.0
       LENGTH = 40.0
-      A = cpv(0.0, LENGTH)
-      B = cpv(0.0,-LENGTH)
+      A = cpv(0.0,-LENGTH)
+      B = cpv(0.0, LENGTH)
       MOMENT = CP::moment_for_segment(MASS,A,B)
       attr_reader :body,:shape,:foot
       def initialize(chassis,crank,offset)
         @body = CP::Body.new(MASS,MOMENT)
-        @body.p = crank.body.p + cpv(0.0,offset-LENGTH)
+        @body.p = crank.body.p + cpv(0.0,LENGTH-offset)
         @shape = CP::Shape::Segment.new(@body,A,B,5.0)
         @shape.group = WALK_BOT_GROUP
-        pivot  = CP::Constraint::PivotJoint.new(crank.body,@body,cpv(0.0,offset),A)
+        pivot  = CP::Constraint::PivotJoint.new(crank.body,@body,cpv(0.0,-offset),A)
         groove = CP::Constraint::GrooveJoint.new(@body,chassis.body,A,B,cpv(crank.body.p.x - chassis.body.p.x,0.0))
         @foot  = CP::Shape::Circle.new(@body,10.0,B)
         @foot.e = 0.0; @foot.u = 1.0
@@ -118,10 +118,10 @@ module ChipmunkDemos
     class Boundary
       include CP::Object
       VERTS = [
-        cpv(-320, 240),
-        cpv(-320,-240),
-        cpv( 320,-240),
-        cpv( 320, 240)
+        cpv(  0,  0),
+        cpv(  0,480),
+        cpv(640,480),
+        cpv(640,  0)
       ]
       ELASTICITY=FRICTION=1.0
       attr_reader :shapes, :body
