@@ -8,13 +8,13 @@ module ChipmunkDemos
         @steps = 3
         @space.resize_active_hash(30.0, 999)
         @space.resize_static_hash(200.0, 99)
-        @space.gravity = cpv(0,-600)
+        @space.gravity = cpv(0,600)
         
         @tumbler = Tumbler.new
         @bricks = []
         for i in (0...3) do
           for j in (0...7) do
-            @bricks << Brick.new(cpv(i*60 - 150, j*30 - 150))
+            @bricks << Brick.new(cpv(i*60 + 170, 390 - j*30))
           end
         end
         
@@ -64,11 +64,12 @@ module ChipmunkDemos
         cpv( 200,-200)
       ]
       ELASTICITY = FRICTION = 1.0
-      SPIN = 0.4
+      SPIN = -0.4
       
       attr_reader :body, :shapes
       def initialize
         @body = CP::StaticBody.new
+        @body.p = cpv(320,240)
         
         # Give the box a little spin.
         # Because staticBody is never added to the space, we will need to
