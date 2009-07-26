@@ -7,27 +7,27 @@ module ChipmunkDemos
         super
         @steps = 1
         @space.iterations = 5
-        @space.gravity    = cpv(0,-100)
+        @space.gravity    = cpv(0, 100)
         @space.resize_static_hash(40.0,999)
         @space.resize_active_hash(30.0,2999)
 
         @static_body = CP::StaticBody.new
 
         # Add triangles. The rubyist in me says this should be converted
-        # form a for-loop to an enumeration, but I guess it really doesn't
+        # from a for-loop to an enumeration, but I guess it really doesn't
         # matter much.
         @triangles = []
         for i in (0...9) do
           for j in (0...6) do
             stagger = (j%2)*40
-            offset = cpv(i*80 - 320 + stagger,j*70 - 240)
+            offset = cpv(i*80 + stagger,j*70+130)
             @triangles << StaticTriangle.new(@static_body,offset)
           end
         end
 
         # Add lots of pentagons
-        @pentagons = Array.new(300) do |i|
-          p = cpv(rand(640) - 320,350)
+        @pentagons = Array.new(100) do |i|
+          p = cpv(rand(640),10)
           FallingPentagon.new(p)
         end
 
@@ -42,8 +42,8 @@ module ChipmunkDemos
         @steps.times do
           @space.step(self.dt)
           @pentagons.each do |pent|
-            if (pent.body.p.y < -260 || pent.body.p.y.abs > 340)
-              pent.body.p = cpv(rand(640) - 320,260)
+            if (pent.body.p.y > 500 || pent.body.p.y < -120)
+              pent.body.p = cpv(rand(640),20)
             end # if
           end #each
         end# do
@@ -53,9 +53,9 @@ module ChipmunkDemos
     class StaticTriangle
       include CP::Object
       VERTICES = [
-        cpv(-15,-15),
-        cpv(  0, 10),
-        cpv( 15,-15)
+        cpv( 15, 15),
+        cpv(  0,-10),
+        cpv(-15, 15)
       ]
       ELASTICITY = FRICTION = 1.0
 
