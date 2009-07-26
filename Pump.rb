@@ -17,16 +17,16 @@ module ChipmunkDemos
         @small_gear = Gear.new(10, 80,cpv(160,400),@scaffolding.body,-Math::PI/2)
         @big_gear   = Gear.new(40,160,cpv(400,400),@scaffolding.body, Math::PI/2)
         # Connect the plunger to the small gear.
-        @pin1 = CP::Constraint::PinJoint.new(@small_gear.body,@plunger.body,cpv(80,0),CP::vzero)
+        @pin1 = CP::Constraint::PinJoint.new(@small_gear.body,@plunger.body,cpv(-80,0),CP::vzero)
         # Connect the gears.
         @teeth = CP::Constraint::GearJoint.new(@small_gear.body,@big_gear.body,-Math::PI/2,-2.0)
         @feeder = Feeder.new(@scaffolding.body)
-        anchr = @feeder.body.world2local(cpv( 96.0,160.0))
-        #@pin2 = CP::Constraint::PinJoint.new(@feeder.body,@small_gear.body,anchr,cpv(0.0,80.0))
+        anchr = @feeder.body.world2local(cpv( 96.0,400.0))
+        @pin2 = CP::Constraint::PinJoint.new(@feeder.body,@small_gear.body,anchr,cpv(0.0,80.0))
         @motor = CP::Constraint::SimpleMotor.new(@scaffolding.body,@big_gear.body,3.0)
         
-        @space.add_objects(@scaffolding,@plunger,@small_gear,@big_gear,@pin1,@teeth,@feeder,@motor,*@balls) # @pin2,
-        @chipmunk_objects.push(@scaffolding,@plunger,@small_gear,@big_gear,@pin1,@teeth,@feeder,@motor,*@balls) #@pin2,  
+        @space.add_objects(@scaffolding,@plunger,@small_gear,@big_gear,@pin1,@teeth,@feeder,@pin2,@motor,*@balls) 
+        @chipmunk_objects.push(@scaffolding,@plunger,@small_gear,@big_gear,@pin1,@teeth,@feeder,@pin2,@motor,*@balls)
       end
       def update
         coef = (2.0 + self.arrow_direction.y)/3.0
@@ -56,8 +56,8 @@ module ChipmunkDemos
         @body = CP::Body.new(MASS,MOMENT)
         @body.p = cpv( 96,(BOTTOM+TOP)/2.0)
         half_len = (BOTTOM-TOP)/2
-        @shape = CP::Shape::Segment.new(@body,cpv(0.0,half_len),cpv(0.0,-half_len),20.0)
-        pivot = CP::Constraint::PivotJoint.new(static_body,@body,cpv(-224.0,BOTTOM),cpv(0.0,-half_len))
+        @shape = CP::Shape::Segment.new(@body,cpv(0.0,-half_len),cpv(0.0,half_len),20.0)
+        pivot = CP::Constraint::PivotJoint.new(static_body,@body,cpv(96.0,BOTTOM),cpv(0.0,half_len))
         
         init_chipmunk_object(@body,@shape,pivot)
       end
