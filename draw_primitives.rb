@@ -13,23 +13,6 @@ module CP
   # Segments, Circles and Polygons, as well as a few other drawing tools.
   module DrawPrimitives
     
-    # For a given chipmunk-space x-cordinate, this method returns the gosu-
-    # space x-cordinate that corresponds. Relies on the including class
-    # implimenting the self.centerx method.
-    def offx(x)
-      (x - self.centerx) + (self.width/2)
-    end
-    
-    # For a given chipmunk-space y-cordinate, this method returns the gosu-
-    # space y-cordinate that corresponds. Relies on the including class
-    # implimenting the self.centery method. Note that Gosu and Chipmunk have
-    # inverted y-axes from each other: in chipmunk, numbers get bigger
-    # you move up in space; in Gosu, number get bigger as you move down
-    # the screen.
-    def offy(y)
-      -(y - self.centery) + (self.height/2)
-    end
-    
     # Some basic drawing shortcuts I like to use.
     def draw_rect(x,y,w,h,c)
       self.draw_quad(x,y,c,x+w,y,c,x,y+h,c,x+w,y+h,c)
@@ -42,7 +25,6 @@ module CP
     # Draws a point at an offset, in the color assigned for vertices.
     def draw_vertex(x,y)
       self.draw_point(x,y,VERTICES)
-      #self.draw_point(offx(x),offy(y),VERTICES)
     end
     
     # The following methods are my translations of the MoonBuggy demo's
@@ -65,7 +47,6 @@ module CP
         [r*Math.cos(rads+a) + x,r*Math.sin(rads + a) + y]
       end.each_cons(2) do |v1,v2|
         self.draw_line(v1[0],v1[1],LINES,v2[0],v2[1],LINES)
-        #self.draw_line(offx(v1[0]),offy(v1[1]),LINES,offx(v2[0]),offy(v2[1]),LINES)
       end
     end
     
@@ -75,7 +56,6 @@ module CP
       a = body.p + seg.a.rotate(body.rot)
       b = body.p + seg.b.rotate(body.rot)
       self.draw_line(a.x,a.y,LINES,b.x,b.y,LINES)
-      #self.draw_line(offx(a.x),offy(a.y),LINES,offx(b.x),offy(b.y),LINES)
     end
     
     def draw_poly_shape(poly)
@@ -85,7 +65,6 @@ module CP
       segs = ary.enum_cons(2).to_a << [ary[-1],ary[0]]
       segs.each do |v1,v2|
         self.draw_line(v1.x,v1.y,LINES,v2.x,v2.y,LINES)
-        #self.draw_line(offx(v1.x),offy(v1.y),LINES,offx(v2.x),offy(v2.y),LINES)
       end
     end
     
