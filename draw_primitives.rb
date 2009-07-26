@@ -5,9 +5,9 @@ module CP
   # access to detailed collision information (i.e. see the difference between
   # the add_collision_func method in ruby and the cpSpaceAddCollisionPairFunc
   # function in C).
-  LINES = Gosu::black
-  VERTICES = Gosu::blue
-  COLLISIONS = Gosu::red
+  LINES = ::Gosu::black
+  VERTICES = ::Gosu::blue
+  COLLISIONS = ::Gosu::red
   
   # This module encompases methods for drawing primitive Chipmunk shapes:
   # Segments, Circles and Polygons, as well as a few other drawing tools.
@@ -41,7 +41,8 @@ module CP
     
     # Draws a point at an offset, in the color assigned for vertices.
     def draw_vertex(x,y)
-      self.draw_point(offx(x),offy(y),VERTICES)
+      self.draw_point(x,y,VERTICES)
+      #self.draw_point(offx(x),offy(y),VERTICES)
     end
     
     # The following methods are my translations of the MoonBuggy demo's
@@ -63,7 +64,8 @@ module CP
         rads = n*coef
         [r*Math.cos(rads+a) + x,r*Math.sin(rads + a) + y]
       end.each_cons(2) do |v1,v2|
-        self.draw_line(offx(v1[0]),offy(v1[1]),LINES,offx(v2[0]),offy(v2[1]),LINES)
+        self.draw_line(v1[0],v1[1],LINES,v2[0],v2[1],LINES)
+        #self.draw_line(offx(v1[0]),offy(v1[1]),LINES,offx(v2[0]),offy(v2[1]),LINES)
       end
     end
     
@@ -72,7 +74,8 @@ module CP
       
       a = body.p + seg.a.rotate(body.rot)
       b = body.p + seg.b.rotate(body.rot)
-      self.draw_line(offx(a.x),offy(a.y),LINES,offx(b.x),offy(b.y),LINES)
+      self.draw_line(a.x,a.y,LINES,b.x,b.y,LINES)
+      #self.draw_line(offx(a.x),offy(a.y),LINES,offx(b.x),offy(b.y),LINES)
     end
     
     def draw_poly_shape(poly)
@@ -81,7 +84,8 @@ module CP
       ary = verts.map {|v| body.p + poly.offset + v.rotate(body.rot)}
       segs = ary.enum_cons(2).to_a << [ary[-1],ary[0]]
       segs.each do |v1,v2|
-        self.draw_line(offx(v1.x),offy(v1.y),LINES,offx(v2.x),offy(v2.y),LINES)
+        self.draw_line(v1.x,v1.y,LINES,v2.x,v2.y,LINES)
+        #self.draw_line(offx(v1.x),offy(v1.y),LINES,offx(v2.x),offy(v2.y),LINES)
       end
     end
     
