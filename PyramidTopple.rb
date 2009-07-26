@@ -8,21 +8,21 @@ module ChipmunkDemos
         @space.iterations = 20
         @space.resize_active_hash(40.0,2999)
         @space.resize_static_hash(40.0,999)
-        @space.gravity = cpv(0, -300)
+        @space.gravity = cpv(0, 300)
       
         @floor = Floor.new
         @dominoes = []
         height = 9
         for i in (1..height) do
-          offset = cpv(-i*60/2.0, (height - i)*52)
+          offset = cpv(-i*60/2.0 + 320, (i - height)*52 + 240)
           for j in (0...i) do
-            @dominoes << Domino.new(cpv(j*60,-220) + offset)
-            @dominoes << Domino.new(cpv(j*60,-197) + offset,Math::PI/2.0)
+            @dominoes << Domino.new(cpv(j*60,220) + offset)
+            @dominoes << Domino.new(cpv(j*60,197) + offset,Math::PI/2.0)
             next if j == (i - 1)
-            @dominoes << Domino.new(cpv(j*60 + 30,-191) + offset,Math::PI/2.0)
+            @dominoes << Domino.new(cpv(j*60 + 30,191) + offset,Math::PI/2.0)
           end
-          @dominoes << Domino.new(cpv(-17,-174) + offset)
-          @dominoes << Domino.new(cpv((i - 1)*60 + 17, -174) + offset)
+          @dominoes << Domino.new(cpv(-17,174) + offset)
+          @dominoes << Domino.new(cpv((i - 1)*60 + 17, 174) + offset)
         end
       
         @space.add_objects(@floor,*@dominoes)
@@ -63,8 +63,8 @@ module ChipmunkDemos
       attr_reader :body, :shape
       def initialize
         @body = CP::StaticBody.new
-        a = cpv(-600,-240)
-        b = cpv( 600,-240)
+        a = cpv(-280,480)
+        b = cpv( 920,480)
         @shape = CP::Shape::Segment.new(@body,a,b,0.0)
         @shape.e = ELASTICITY
         @shape.u = FRICTION
