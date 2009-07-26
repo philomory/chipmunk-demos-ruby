@@ -8,7 +8,7 @@ module ChipmunkDemos
     class TheoJansenDemo < Demo
       def initialize
         super
-        @space.gravity = cpv(0,-500)
+        @space.gravity = cpv(0, 500)
         @space.iterations = 20
         @boundary = Boundary.new
         @bot = Bot.new
@@ -55,6 +55,7 @@ module ChipmunkDemos
       attr_reader :body,:shape
       def initialize
         @body = CP::Body.new(MASS,MOMENT)
+        @body.p = cpv(320,240)
         @shape = CP::Shape::Segment.new(@body,A,B,SEG_RADIUS)
         @shape.group = ROBOT_GROUP
         init_chipmunk_object(@body,@shape)
@@ -69,6 +70,7 @@ module ChipmunkDemos
       attr_reader :body, :shape, :joint, :motor
       def initialize(chassis)
         @body = CP::Body.new(MASS,MOMENT)
+        @body.p = cpv(320,240)
         @shape = CP::Shape::Circle.new(@body,RADIUS,CP::vzero)
         @shape.group = ROBOT_GROUP
         @joint = CP::Constraint::PivotJoint.new(chassis.body,@body,CP::vzero,CP::vzero)
@@ -92,12 +94,12 @@ module ChipmunkDemos
       MASS = 1.0
       attr_reader :body
       def initialize(side,offset,chassis,crank,anchor)
-        a,b = CP::vzero,cpv(0.0,side)
+        a,b = CP::vzero,cpv(0.0,-side)
         @body = CP::Body.new(MASS,CP::moment_for_segment(MASS,a,b))
-        @body.p = cpv(offset,0.0)
+        @body.p = cpv(offset+320,240.0)
         @shape = CP::Shape::Segment.new(@body,a,b,SEG_RADIUS)
         @shape.group = ROBOT_GROUP
-        @pivot = CP::Constraint::PivotJoint.new(chassis.body,@body,@body.p,CP::vzero)
+        @pivot = CP::Constraint::PivotJoint.new(chassis.body,@body,cpv(offset,0.0),CP::vzero)
         @pin   = CP::Constraint::PinJoint.new(crank.body,@body,anchor,b)
         @pin.dist = Math.sqrt(side*side + offset*offset)
         init_chipmunk_object(@body,@shape,@pivot,@pin)
@@ -108,9 +110,9 @@ module ChipmunkDemos
       MASS = 1.0
       attr_reader :body
       def initialize(side,offset,chassis,crank,anchor)
-        a,b = CP::vzero,cpv(0.0,-side)
+        a,b = CP::vzero,cpv(0.0,side)
         @body = CP::Body.new(MASS,CP::moment_for_segment(MASS,a,b))
-        @body.p = cpv(offset,-side)
+        @body.p = cpv(offset+320,side+240)
         @leg_shape = CP::Shape::Segment.new(@body,a,b,SEG_RADIUS)
         @leg_shape.group = ROBOT_GROUP
         @foot_shape = CP::Shape::Circle.new(@body,SEG_RADIUS*2,b)
@@ -125,10 +127,10 @@ module ChipmunkDemos
     class Boundary
       include CP::Object
       VERTS = [
-        cpv(-320, 240),
-        cpv(-320,-240),
-        cpv( 320,-240),
-        cpv( 320, 240)
+        cpv(  0,  0),
+        cpv(  0,480),
+        cpv(640,480),
+        cpv(640,  0)
       ]
       ELASTICITY=FRICTION=1.0
       attr_reader :shapes, :body
