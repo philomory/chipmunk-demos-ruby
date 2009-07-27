@@ -31,6 +31,7 @@ require 'LogoSmash'
 require 'WalkBot'
 require 'TheoJansen'
 require 'Pump'
+require 'PinballPaddle'
 
 module ChipmunkDemos
   DEMOS = [
@@ -42,7 +43,8 @@ module ChipmunkDemos
     Bounce::BounceDemo,
     WalkBot::WalkBotDemo,
     TheoJansen::TheoJansenDemo,
-    Pump::PumpDemo
+    Pump::PumpDemo,
+    PinballPaddle::PinballPaddleDemo
   ]
   
   class MainWindow < Gosu::Window
