@@ -17,11 +17,11 @@ module ChipmunkDemos
         @chipmunk_objects.push(@frame,@paddle)
       end
       def update
-        if self.arrow_direction != CP::vzero
-          @paddle.paddle.body.apply_force(cpv(-3000.0,0.0),cpv(40,15))
+        @paddle.paddle.body.reset_forces
+        if self.arrow_direction.x == 1
+          @paddle.paddle.body.apply_force(cpv(-5000.0,0.0),cpv(40,15))
         end
         super
-        @paddle.paddle.body.reset_forces
       end
     end
     class PaddleAssembly
@@ -29,7 +29,7 @@ module ChipmunkDemos
       attr_reader :paddle, :break, :driver
       def initialize(p,static_body)
         @paddle = Paddle.new(p,static_body)
-        @break  = Break.new(p)
+        @break  = Break.new(p,@paddle.body)
         #@driver = Driver.new(p,@paddle.body)
         init_chipmunk_object(@paddle,@break)#,@driver)
       end
@@ -61,12 +61,13 @@ module ChipmunkDemos
       RADIUS = 2.0
       OFFSET = cpv(-25,20)
       attr_reader :body, :shape
-      def initialize(p)
+      def initialize(p,paddle_body)
         @body = CP::StaticBody.new
         @body.p = p + OFFSET
         
         @shape = CP::Shape::Circle.new(@body,RADIUS,CP::vzero)
-        init_chipmunk_object(@body,@shape)
+        @slide = CP::Constraint::SlideJoint.new(@body,paddle_body,CP::vzero,cpv(-25,0),0.0,50.0)
+        init_chipmunk_object(@body,@shape,@slide)
       end
     end
     class Driver
